@@ -1,0 +1,204 @@
+6	附：Centos6.5下安装mysql
+第一步：查看mysql是否安装。
+rpm -qa|grep mysql
+第二步：如果mysql的版本不是想要的版本。需要把mysql卸载。
+yum remove mysql mysql-server mysql-libs mysql-common
+rm -rf /var/lib/mysql
+rm /etc/my.cnf
+第三步：安装mysql。需要使用yum命令安装。在安装mysql之前需要安装mysql的下载源。需要从oracle的官方网站下载。
+1）下载mysql的源包。
+我们是centos6.4对应的rpm包为：mysql-community-release-el6-5.noarch.rpm
+2）安装mysql下载源：
+yum localinstall mysql-community-release-el6-5.noarch.rpm
+( )此附件可保存
+
+3）在线安装mysql：
+yum install mysql-community-server
+第四步：启动mysql
+service mysqld start
+第五步：需要给root用户设置密码。
+/usr/bin/mysqladmin -u root password 'new-password'　　// 为root账号设置密码
+第六步：远程连接授权。
+GRANT ALL PRIVILEGES ON *.* TO 'myuser'@'%' IDENTIFIED BY 'mypassword' WITH GRANT OPTION;
+
+注意：'myuser'、'mypassword' 需要替换成实际的用户名和密码。
+ mysql -uroot -h 127.0.0.1 -p
+
+
+ 3、安装mysql（在113、114、115、116四台服务器上安装）
+ #安装mysql的服务器需开启防火墙3306
+
+ 1、 找到安装包
+ 在服务器 /mnt/software/ 目录下找到安装包mysql-5.6.27-linux-glibc2.5-x86_64.tar.gz进入 /mnt/software/ 目录命令如下：
+
+ #cd /mnt/software/
+
+  
+
+ 2、安装 mysql
+ #tar -zxvf mysql-5.6.27-linux-glibc2.5-x86_64.tar.gz
+
+ #mv mysql-5.6.27-linux-glibc2.5-x86_64 /data/qinyi/mysql
+
+  
+
+ 3、添加用户与组
+ #cd /data/qinyi/mysql
+
+ #groupadd mysql
+
+ #useradd -r -g mysql mysql
+
+ #cd ..
+
+ #chown -R mysql:mysql mysql
+
+  
+
+ 4、安装数据库
+ #su mysql
+
+ #cd /data/qinyi/mysql/scripts
+
+ #./mysql_install_db --user=mysql --basedir=/data/qinyi/mysql --datadir=/data/qinyi/mysql/data
+
+ #exit
+
+ #如果报-bash: ./scripts/mysql_install_db: /usr/bin/perl: bad interpreter: No such file or directory，eixt并用root用户执行 
+
+ #yum -y install perl perl-devel     
+
+ #yum install libaio
+
+ 后在初始化数据库即可。   
+
+  
+
+ 5、配置文件
+ #cd /data/qinyi/mysql/support-files
+
+ #cp my-default.cnf /etc/my.cnf
+
+ #cp mysql.server /etc/init.d/mysql
+
+ #vim /etc/init.d/mysql
+
+  
+
+ 修改mysql文件中的两个变更值
+
+ basedir=/data/qinyi/mysql
+ datadir=/data/qinyi/mysql/data
+
+  
+
+  
+
+ #vi /etc/my.cnf（大小写区分）
+
+ 在mysqld中添加
+ lower_case_table_names=1
+ character_set_server = utf8
+ max_allowed_packet = 20M
+ ft_min_word_len=1
+
+ max_connections=1000
+
+ datadir = /data/qinyi/mysql/data
+
+  
+
+ 6、配置环境变量
+ vim /etc/profile
+
+  
+
+ 在文件中增加以下两行：
+
+ export MYSQL_HOME="/data/qinyi/mysql"
+
+ export PATH="$PATH:$MYSQL_HOME/bin"
+
+  
+
+ 7、让环境变量生效
+ #source /etc/profile
+
+  
+
+ 8、添加自启动服务
+ #chkconfig --add mysql
+
+ #chkconfig mysql on
+
+  
+
+ 9、启动mysql
+ #cd /data/qinyi/mysql/bin
+
+ #service mysql start
+
+ #MySQL提示:The server quit without updating PID file问题的解决办法
+
+ mysql在启动时没有指定配置文件时会使用/etc/my.cnf配置文件，请打开这个文件查看在[mysqld]节下有没有指定数据目录(datadir)。
+ 解决方法：请在[mysqld]下设置这一行：datadir = /usr/local/mysql/data
+
+  
+
+ #Socket连接有问题时：ln -s /var/lib/mysql/mysql.sock /tmp/mysql.sock
+
+  
+
+ 10、增加root用户密码：
+ #cd /data/qinyi/mysql/bin
+
+ #mysqladmin -u root password 'hww123456'
+
+ Socket连接有问题时：
+
+ ln -s /var/lib/mysql/mysql.sock /tmp/mysql.sock
+
+  
+
+ 如果报mysqladmin：command not found
+
+ #ln -s /data/qinyi/mysql/bin/mysql /usr/bin
+
+ # ln -fs /MYSQLPATH/bin/mysql mysql   MYSQLPATH为mysql安装目录
+
+  
+
+  
+
+ 11、登录mysql添加用户
+ #mysql -u root -p     #登录mysql,需要输入密码
+
+ #mysql>GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '123456' WITH GRANT OPTION;     #允许root用户远程访问,不建议
+
+ #mysql>FLUSH PRIVILEGES;     #刷新权限
+
+ #mysq>GRANT select,insert,update,delete,create,alter,drop,references,index,create temporary tables ON *.* TO 'qinyi'@'%' IDENTIFIED BY 'qy931122' WITH GRANT OPTION;
+
+   #创建新用户可远程登录并赋予权限。
+
+ #mysql>exit
+
+  
+
+ 12、检查Mysql 版本号
+  
+
+  
+
+
+
+ mysql安装包如有需要,请联系我   邮箱   464744895@qq.com
+ ---------------------
+ 作者：LonesomeRoad
+ 来源：CSDN
+ 原文：https://blog.csdn.net/qq_24138151/article/details/78678871
+ 版权声明：本文为博主原创文章，转载请附上博文链接！
+
+查看一下/etc/rc.d/init.d/mysqld的状态：
+
+linux下删除字符串 v d

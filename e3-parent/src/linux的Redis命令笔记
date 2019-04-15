@@ -1,0 +1,124 @@
+redis的数据类型
+String Map list set
+//linux中的命令
+keys *：列出所有得集合类型
+//设置集合为set类型：set key1(键) aaa(值)
+//获取值：get key1
+//删除值 del key1
+-----------------------
+//创建一个hashset集合，hset1为集合键，：hset(集合的类型) hset1(集合的名称) field(集合的字段) 1(Filed字段的值)
+//取出所有得字段：hkeys hset1
+//取出所有得字段的值：hvals hset1
+//取出所有得键与值：hgetall hset1
+
+-----------------------------------------
+list集合有关的linux命令
+//从左边push元素： lpush list1  1,2,3,4,5
+//从右边添加元素：rpush  list1 a,b,c,d,e
+//取出所有的元素 lrange list1 0 -1
+---
+list集合取出第一个左边第一个元素：lpro list1
+list集合取出第一个右边第一个元素：rpro list1
+------------------------------
+set集合有关的命令：
+sadd set a b c d c 注意：set集合会过滤掉原有的元素，可以去除重复的数据
+//删除一个元素：srem set a
+//添加两个集合：
+sadd1 set1 a b c d e ，sadd set2 c d e f g
+//去除俩个不同的结果元素
+sdiff seta setb： 所去除的结果为：a b
+//取出两个集合的交集：sinter seta setb
+
+------------------------------------------
+zadd 有关的集合
+zadd zset1 1 a 3 c 5 f 6 h
+//取出所有的元素：zrange zset1 0 -1
+//删除元素 zrem zset1 a
+//降序排序：zrevranger zset1  0 -1
+-------------------
+Expire key second：设置key的过期时间
+Ttl key：查看key的有效期
+Persist key：清除key的过期时间。Key持久化。
+
+
+
+///文件上传的命令
+rz -y
+//文件下载的命令
+sz -y
+ //文件删除的命令
+ rm -f 文件名称
+
+
+ linux复制文件 cp 文件m名称 文件luj
+ linux 下查看启动tomcat是否启动：bin/startup.sh
+ linux下查看tomcat是否是否开启的日子 tail -f logs/catalina.out
+
+----------------------
+linux下操作zookeeper的命令
+开启zookkeeper：cd zookeeper的bin目录，然后命令为:./zkServer.sh start 查看是否启动:./zkServer.sh status
+关闭防火墙：service iptables stop
+永久关闭防火墙：chkconfi iptables off
+输出以下信息说明zookeeper已经启动
+JMX enabled by default
+ Using config: /usr/local/zookkeeper/zookeeper-3.4.6/bin/../conf/zoo.cfg
+ Mode: standalone
+//注意：如果发现开启不了activemq，就把data目录下的文件全部删掉，zookeeper的也是一样
+
+
+
+
+
+11.2.	安装步骤
+第一步： 把ActiveMQ 的压缩包上传到Linux系统。
+第二步：解压缩。
+第三步：启动。
+使用bin目录下的activemq命令启动：
+[root@localhost bin]# ./activemq start
+关闭：
+[root@localhost bin]# ./activemq stop
+查看状态：
+[root@localhost bin]# ./activemq status
+
+
+在bin目录下
+[root@localhost bin]# ps aux|grep redis
+查看redis的进程：ps aux|grep  redis
+1.启动：redis-server（redis-server redis.conf）
+在bin目录下：./redis-server redis.conf
+//指定redis连接的端口号：redis-cli -h  192.168.25.133 -p 6379
+2.登陆：redis-cli（redis-cli -p 6379）
+连接服务端
+./redis-cli
+
+3.关闭：redis-cli shutdown
+-----------------------------------
+activemq的有关的linux命令
+activemq的安装
+11.2.	安装步骤
+第一步： 把ActiveMQ 的压缩包上传到Linux系统。
+第二步：解压缩。
+第三步：启动。
+使用bin目录下的activemq命令启动：
+[root@localhost bin]# ./activemq start
+关闭：
+[root@localhost bin]# ./activemq stop
+查看状态：
+[root@localhost bin]# ./activemq status
+
+进入管理后台：
+http://192.168.25.168:8161/admin
+用户名：admin
+密码：admin
+
+    /**
+     * 总结：队列和广播
+     * Topics和Queue和的最大区别在与：
+     * Topics如果没有生产者会消息会消失，而Queue不会消失，会一直保留在activeMq的后台
+     *
+     *
+
+
+
+
+

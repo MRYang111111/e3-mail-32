@@ -1,0 +1,9 @@
+0:0:0:0:0:0:0:1 - - [13/Apr/2019:14:29:55 +0800] "GET /search.html?keyword=%E5%B0%8F%E7%B1%B3 HTTP/1.1" 200 29690 http-bio-8085-exec-2 1061
+0:0:0:0:0:0:0:1 - - [13/Apr/2019:14:29:57 +0800] "GET /favicon.ico HTTP/1.1" 404 973 http-bio-8085-exec-4 3
+0:0:0:0:0:0:0:1 - - [13/Apr/2019:14:30:46 +0800] "GET /search.html?keyword=%E5%B0%8F%E7%B1%B3 HTTP/1.1" 200 29690 http-bio-8085-exec-5 42
+0:0:0:0:0:0:0:1 - - [13/Apr/2019:15:04:02 +0800] "GET /search.html?keyword=%E8%81%94%E6%83%B3 HTTP/1.1" 200 83716 http-bio-8085-exec-8 287
+0:0:0:0:0:0:0:1 - - [13/Apr/2019:15:04:10 +0800] "GET /search.html?keyword=%E8%81%94%E6%83%B3%E7%94%B5%E8%84%91 HTTP/1.1" 200 83917 http-bio-8085-exec-9 84
+0:0:0:0:0:0:0:1 - - [13/Apr/2019:18:09:08 +0800] "GET /search.html?keyword=%E5%8D%8E%E4%B8%BA HTTP/1.1" 200 86294 http-bio-8085-exec-2 158
+0:0:0:0:0:0:0:1 - - [13/Apr/2019:18:10:02 +0800] "GET /search.html?keyword=%E5%8D%8E%E4%B8%BA HTTP/1.1" 200 86294 http-bio-8085-exec-2 95
+0:0:0:0:0:0:0:1 - - [13/Apr/2019:18:10:57 +0800] "GET /search.html?keyword=%E5%B0%8F%E7%B1%B3 HTTP/1.1" 200 29690 http-bio-8085-exec-2 34
+0:0:0:0:0:0:0:1 - - [13/Apr/2019:18:11:12 +0800] "GET /search.html?keyword=oppo%E6%89%8B%E6%9C%BA HTTP/1.1" 200 84964 http-bio-8085-exec-2 130

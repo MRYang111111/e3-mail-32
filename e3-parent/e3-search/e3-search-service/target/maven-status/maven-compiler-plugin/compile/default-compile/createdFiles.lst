@@ -1,0 +1,5 @@
+cn\yxd\search\mapper\ItemListMapper.class
+cn\yxd\search\message\MyMessageListener.class
+cn\yxd\search\service\impl\SearchItemServiceImpl.class
+cn\yxd\search\dao\SearchDao.class
+cn\yxd\search\service\impl\SearchServiceImpl.class

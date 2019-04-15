@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
+  <context:component-scan base-package="cn.yxd.orders.service.*"/>
+    <!--读取jdbc.properties文件-->
+    <context:property-placeholder location="classpath:conf/*.properties" />
+    <!--配置数据源-->
+    <bean  id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${jdbc.driver}" />
+        <property name="url" value="${jdbc.url}" />
+        <property name="username" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
+        <property name="maxActive" value="10" />
+        <property name="minIdle" value="5" />
+
+    </bean>
+    <!--交由spring管理sqlSessionFactory-->
+    <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <!-- 加载mybatis的全局配置文件 -->
+        <property name="configLocation" value="classpath:mybatis/SqlMapConfig.xml" />
+
+    </bean>
+    <!--配置mapper扫描
+    -->
+    <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="cn.yxd.mapper"></property>
+    </bean>
+<!--配置事务植入-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref="dataSource"/>
+</bean>
+
+    <!--配置事务的注解-->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <!-- 提供方应用信息，用于计算依赖关系 -->
+    <dubbo:application name="e3_content" />
+    <!--<dubbo:registry protocol="zookeeper"-->
+                    <!--address="localhost:2181" />-->
+    <dubbo:registry protocol="zookeeper"
+                    address="192.168.25.133:2181" />
+    <!-- 用dubbo协议在20880端口暴露服务 -->
+    <dubbo:protocol name="dubbo" port="20885" />
+    <!-- 声明需要暴露的服务接口 -->
+    <dubbo:service interface="cn.yxd.orders.service.OrdersService" ref="ordersServiceImpl" timeout="600000"/>
+
+    <!--配置Redis的单机版-->
+    <bean id="jedisClientPool" class="cn.yxd.common.jedis.JedisClientPool">
+        <property name="jedisPool" ref="jedisPool"></property>
+    </bean>
+    <!--才用1构造注入色方式-->
+    <bean id="jedisPool" class="redis.clients.jedis.JedisPool">
+        <constructor-arg name="host" value="192.168.25.133"></constructor-arg>
+        <constructor-arg name="port" value="6379"></constructor-arg>
+    </bean>
+
+
+
+
+</beans>
+
+
+

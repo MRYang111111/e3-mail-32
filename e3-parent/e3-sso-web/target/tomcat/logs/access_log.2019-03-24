@@ -1,0 +1,5 @@
+0:0:0:0:0:0:0:1 - - [24/Mar/2019:14:27:52 +0800] "GET /page/login HTTP/1.1" 200 10129 http-bio-8088-exec-1 1174
+0:0:0:0:0:0:0:1 - - [24/Mar/2019:14:27:53 +0800] "GET /favicon.ico HTTP/1.1" 404 949 http-bio-8088-exec-3 5
+0:0:0:0:0:0:0:1 - - [24/Mar/2019:14:28:01 +0800] "POST /user/login HTTP/1.1" 200 82 http-bio-8088-exec-4 1436
+0:0:0:0:0:0:0:1 - - [24/Mar/2019:14:28:03 +0800] "GET /images/productinfo.png HTTP/1.1" 404 949 http-bio-8088-exec-5 6
+0:0:0:0:0:0:0:1 - - [24/Mar/2019:14:28:03 +0800] "GET /user/token/713eef15-e0ad-4998-aa40-a8149155d60d?callback=jsonp1553408883703 HTTP/1.1" 200 187 http-bio-8088-exec-6 108
